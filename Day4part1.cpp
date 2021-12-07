@@ -9,6 +9,14 @@
 
 using namespace std;
 
+
+
 int main(){
-    
+    fstream newfile;
+
+    newfile.open("Day4_sample.txt",ios::in); 
+    if (newfile.is_open()){
+
+    }   
+
 }
