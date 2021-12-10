@@ -1,4 +1,4 @@
-//advent of code day 5 part 1
+//advent of code day 5 part 2
 
 //includes
 #include <iostream>
@@ -12,13 +12,13 @@ using namespace std;
 
 int main(){
     
-    vector<vector<int>> grid(1000,vector<int>(1000, 0));
+    vector<vector<int>> grid(10,vector<int>(10, 0));
 
     fstream newfile;
 
     regex rgx("([0-9]+),([0-9]+) -> ([0-9]+),([0-9]+)");
 
-    newfile.open("Day5.txt",ios::in); 
+    newfile.open("Day5_sample.txt",ios::in); 
     if (newfile.is_open()){   
         string line;
         while(getline(newfile, line)){ 
@@ -32,36 +32,37 @@ int main(){
                 y2 = stoi(match[4].str());
             }
 
-            if(x1 == x2 || y1 == y2){
 
-                if(x1==x2){
-                    if(y1<y2){
-                        for(int i = y1; i <= y2; i++){
-                            grid[i][x1] += 1;
-                        }
+            if(x1==x2){
+                if(y1<y2){
+                    for(int i = y1; i <= y2; i++){
+                        grid[i][x1] += 1;
                     }
-                    else if(y2<y1){
-                        for(int i = y2; i <= y1; i++){
-                            grid[i][x1] += 1;
-                        }
-                    }
-                   
                 }
-                else if(y1==y2){
-                    if(x1<x2){
-                        for(int i = x1; i <= x2; i++){
-                            grid[y1][i] += 1;
-                        }
+                else if(y2<y1){
+                    for(int i = y2; i <= y1; i++){
+                        grid[i][x1] += 1;
                     }
-                    else if(x2<x1){
-                        for(int i = x2; i <= x1; i++){
-                            grid[y1][i] += 1;
-                        }
-                    }
-                   
                 }
-
+                
             }
+            else if(y1==y2){
+                if(x1<x2){
+                    for(int i = x1; i <= x2; i++){
+                        grid[y1][i] += 1;
+                    }
+                }
+                else if(x2<x1){
+                    for(int i = x2; i <= x1; i++){
+                        grid[y1][i] += 1;
+                    }
+                }
+                
+            }
+            else{
+              
+            }
+
             
 
                  
@@ -69,10 +70,12 @@ int main(){
         int total = 0 ;
         for(auto row: grid){
             for(auto el: row){
+                cout<< el << " ";
                 if(el>1){
                     total += 1;
                 }
-            }   
+            }  
+            cout<<endl; 
         }
 
         cout<< total << endl;
