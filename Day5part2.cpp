@@ -12,13 +12,13 @@ using namespace std;
 
 int main(){
     
-    vector<vector<int>> grid(10,vector<int>(10, 0));
+    vector<vector<int>> grid(1000,vector<int>(1000, 0));
 
     fstream newfile;
 
     regex rgx("([0-9]+),([0-9]+) -> ([0-9]+),([0-9]+)");
 
-    newfile.open("Day5_sample.txt",ios::in); 
+    newfile.open("Day5.txt",ios::in); 
     if (newfile.is_open()){   
         string line;
         while(getline(newfile, line)){ 
@@ -26,6 +26,7 @@ int main(){
             smatch match;
             //split line into direction and number
             if(regex_search(line,match,rgx)){
+                //cout<<match[0].str()<<endl;
                 x1 = stoi(match[1].str());
                 y1 = stoi(match[2].str());
                 x2 = stoi(match[3].str());
@@ -60,22 +61,68 @@ int main(){
                 
             }
             else{
+                if(x1<x2){
+                    if(y1<y2){
+                        int i = x1;
+                        int j = y1;
+                        while(i <= x2 && j <= y2 ){
+                            grid[j][i] += 1;
+                            j++;
+                            i++;
+                        }
+                    }
+                    else if(y2<y1){
+                        int i = x1;
+                        int j = y1;
+                        while(i <= x2 && j >= y2 ){
+                            grid[j][i] += 1;
+                            j--;
+                            i++;
+                        }
+                    }
+                }
+                else if(x2<x1){
+                   if(y1<y2){
+                        int i = x1;
+                        int j = y1;
+                        while(i >= x2 && j <= y2 ){
+                            grid[j][i] += 1;
+                            j++;
+                            i--;
+                        }
+                    }
+                    else if(y2<y1){
+                        int i = x1;
+                        int j = y1;
+                        while(i >= x2 && j >= y2 ){
+                            grid[j][i] += 1;
+                            j--;
+                            i--;
+                        }
+                    }
+                }
               
             }
 
-            
+        /*for(auto row: grid){
+            for(auto el: row){
+                cout<< el << " ";
+            }  
+            cout<<endl; 
+        } 
+        cout<<endl;*/
 
                  
         }
         int total = 0 ;
         for(auto row: grid){
             for(auto el: row){
-                cout<< el << " ";
+                //cout<< el << " ";
                 if(el>1){
                     total += 1;
                 }
             }  
-            cout<<endl; 
+            //cout<<endl; 
         }
 
         cout<< total << endl;
